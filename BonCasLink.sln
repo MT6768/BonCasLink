@@ -1,21 +1,20 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasServer", "BonCasServer\BonCasServer.vcproj", "{4B307CD2-7143-46AE-8BE9-70B85D4E6C66}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasServer", "BonCasServer\BonCasServer.vcxproj", "{4B307CD2-7143-46AE-8BE9-70B85D4E6C66}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasProxy", "BonCasProxy\BonCasProxy.vcproj", "{40B1C3AF-9F23-4AD3-BA99-3C110B7FBF46}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasProxy", "BonCasProxy\BonCasProxy.vcxproj", "{40B1C3AF-9F23-4AD3-BA99-3C110B7FBF46}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B12C54BC-6314-4E12-8122-A836CD128933} = {B12C54BC-6314-4E12-8122-A836CD128933}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasStub", "BonCasStub\BonCasStub.vcproj", "{B12C54BC-6314-4E12-8122-A836CD128933}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasStub", "BonCasStub\BonCasStub.vcxproj", "{B12C54BC-6314-4E12-8122-A836CD128933}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasService", "BonCasService\BonCasService.vcproj", "{E4419846-BF26-441D-8965-C819C516F55F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasService", "BonCasService\BonCasService.vcxproj", "{E4419846-BF26-441D-8965-C819C516F55F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasServicePS", "BonCasService\BonCasServicePS.vcproj", "{7318F477-9B2A-4BAB-9F96-1DD05846E0BB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E4419846-BF26-441D-8965-C819C516F55F} = {E4419846-BF26-441D-8965-C819C516F55F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BonCasServicePS", "BonCasService\BonCasServicePS.vcxproj", "{7318F477-9B2A-4BAB-9F96-1DD05846E0BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,5 +43,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD07DEFA-FB9C-46DF-B58C-73497ED40F3E}
 	EndGlobalSection
 EndGlobal
