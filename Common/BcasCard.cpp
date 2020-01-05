@@ -100,7 +100,7 @@ const bool CBcasCard::OpenCard(LPCTSTR lpszReader)
 		}
 
 	// ƒJ[ƒh‰Šú‰»
-	if(!InitialSetting())return false;
+	//if(!InitialSetting())return false;
 
 	m_dwLastError = BCEC_NOERROR;
 
