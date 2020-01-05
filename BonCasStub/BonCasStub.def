@@ -1,0 +1,3 @@
+LIBRARY	"BonCasStub"
+
+SECTIONS .HookSection READ WRITE SHARED

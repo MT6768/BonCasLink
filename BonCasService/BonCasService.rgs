@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'BonCasService'
+		'BonCasService.EXE'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

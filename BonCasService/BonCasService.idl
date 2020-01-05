@@ -1,0 +1,18 @@
+// BonCasService.idl : BonCasService の IDL ソース
+//
+
+// このファイルは、タイプ ライブラリ (BonCasService.tlb) およびマーシャリング コードを
+// 作成するために MIDL ツールによって処理されます。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(59381FCC-72CC-45C3-9796-CC6EBF8DE240),
+	version(1.0),
+	helpstring("BonCasService 1.0 タイプ ライブラリ")
+]
+library BonCasServiceLib
+{
+	importlib("stdole2.tlb");
+};

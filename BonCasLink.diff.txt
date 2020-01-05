@@ -1,0 +1,12 @@
+diff -uNr BonCasLink/Common/BcasCard.cpp BonCasLink.patched/Common/BcasCard.cpp
+--- BonCasLink/Common/BcasCard.cpp	2015-08-14 00:46:02.589869700 +0900
++++ BonCasLink.patched/Common/BcasCard.cpp	2015-08-14 11:10:33.562466000 +0900
+@@ -100,7 +100,7 @@
+ 		}
+ 
+ 	// ÉJÅ[Éhèâä˙âª
+-	if(!InitialSetting())return false;
++	//if(!InitialSetting())return false;
+ 
+ 	m_dwLastError = BCEC_NOERROR;
+ 
