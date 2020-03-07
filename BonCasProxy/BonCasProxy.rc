@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 日本語 resources
+// 日本語 (日本) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
-#ifdef _WIN32
 LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 #pragma code_page(932)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -65,8 +63,11 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\BonCasProxy.ico"
+
 IDI_REDCARD             ICON                    "res\\iRedCard.ico"
+
 IDI_BLUECARD            ICON                    "res\\BlueCard.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -76,30 +77,30 @@ IDI_BLUECARD            ICON                    "res\\BlueCard.ico"
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "バージョン情報"
-FONT 9, "MS UI Gothic", 0, 0, 0x1
+FONT 9, "Meiryo UI", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "BonCasProxy Version 1.00",IDC_STATIC,42,12,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2008 http://2sen.dip.jp/friio/",IDC_STATIC,42,30,188,8
+    LTEXT           "BonCasProxy Version 1.10",IDC_STATIC,42,12,99,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2008 http://2sen.dip.jp/friio/",IDC_STATIC,42,30,151,8
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
 IDD_BONCASPROXY_DIALOG DIALOGEX 0, 0, 215, 201
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "BonCasProxy Ver.1.00  http://2sen.dipjp/friio/"
-FONT 9, "MS UI Gothic", 0, 0, 0x1
+CAPTION "BonCasProxy"
+FONT 9, "Meiryo UI", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,102,180,50,16
-    PUSHBUTTON      "キャンセル",IDCANCEL,160,180,50,16
+    DEFPUSHBUTTON   "OK",IDOK,154,178,50,16
+    PUSHBUTTON      "キャンセル",IDCANCEL,98,178,50,16
     GROUPBOX        "サーバ設定",IDC_STATIC,6,6,204,66
     CONTROL         "",IDC_SERVERADDR,"SysIPAddress32",WS_TABSTOP,54,22,84,12
-    EDITTEXT        IDC_SERVERPORT,54,48,36,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_SERVERPORT,54,48,32,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "IPアドレス",IDC_STATIC,18,24,27,8
     LTEXT           "TCPポート",IDC_STATIC,18,50,30,8
     GROUPBOX        "使用中のアプリケーション",IDC_STATIC,6,78,204,96
     CONTROL         "",IDC_CLIENTLIST,"SysListView32",LVS_REPORT | LVS_SORTASCENDING | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,12,90,192,78
-    LTEXT           "(デフォルト: 6900)",IDC_STATIC,100,50,62,8
+    LTEXT           "(デフォルト: 6900)",IDC_STATIC,93,50,55,8
 END
 
 
@@ -148,7 +149,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -174,7 +175,7 @@ END
 // Menu
 //
 
-IDR_MENU MENU 
+IDR_MENU MENU
 BEGIN
     POPUP "Dummy"
     BEGIN
@@ -188,15 +189,31 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_BONCASPROXY_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "バージョン情報 BonCasProxy(&A)..."
 END
 
-#endif    // 日本語 resources
+#endif    // 日本語 (日本) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

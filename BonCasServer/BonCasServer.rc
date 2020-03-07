@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 日本語 resources
+// 日本語 (日本) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
-#ifdef _WIN32
 LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
 #pragma code_page(932)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -65,8 +63,11 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\BonCasServer.ico"
+
 IDI_REDCARD             ICON                    "res\\iRedCard.ico"
+
 IDI_BLUECARD            ICON                    "res\\BlueCard.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -76,26 +77,26 @@ IDI_BLUECARD            ICON                    "res\\BlueCard.ico"
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "バージョン情報"
-FONT 9, "MS UI Gothic", 0, 0, 0x1
+FONT 9, "Meiryo UI", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "BonCasServer Version 1.01",IDC_STATIC,42,12,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2008 http://2sen.dip.jp/friio/",IDC_STATIC,42,30,168,8
+    LTEXT           "BonCasServer Version 1.10",IDC_STATIC,42,12,95,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2008 http://2sen.dip.jp/friio/",IDC_STATIC,42,30,151,8
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
-IDD_BONCASSERVER_DIALOG DIALOGEX 0, 0, 170, 87
+IDD_BONCASSERVER_DIALOG DIALOGEX 0, 0, 170, 80
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "BonCasServer Ver.1.01  http://2sen.dip.jp/"
-FONT 9, "MS UI Gothic", 0, 0, 0x1
+CAPTION "BonCasServer"
+FONT 9, "Meiryo UI", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,112,60,50,16
-    PUSHBUTTON      "キャンセル",IDCANCEL,54,60,50,16
+    DEFPUSHBUTTON   "OK",IDOK,112,57,50,16
+    PUSHBUTTON      "キャンセル",IDCANCEL,54,57,50,16
     GROUPBOX        "サーバ設定",IDC_STATIC,6,6,156,42
-    EDITTEXT        IDC_SERVERPORT,54,24,36,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_SERVERPORT,50,24,34,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "TCPポート",IDC_STATIC,18,26,30,8
-    LTEXT           "(デフォルト: 6900)",IDC_STATIC,100,26,56,8
+    LTEXT           "(デフォルト: 6900)",IDC_STATIC,89,26,56,8
 END
 
 
@@ -143,7 +144,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -158,7 +159,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 163
         TOPMARGIN, 7
-        BOTTOMMARGIN, 80
+        BOTTOMMARGIN, 73
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -169,7 +170,7 @@ END
 // Menu
 //
 
-IDR_MENU MENU 
+IDR_MENU MENU
 BEGIN
     POPUP "Dummy"
     BEGIN
@@ -183,15 +184,31 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_BONCASSERVER_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "バージョン情報 BonCasServer(&A)..."
 END
 
-#endif    // 日本語 resources
+#endif    // 日本語 (日本) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
