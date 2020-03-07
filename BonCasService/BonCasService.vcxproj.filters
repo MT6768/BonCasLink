@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="生成されたファイル">
-      <UniqueIdentifier>{f61a34d5-9e9f-476c-bedc-b50ca9fbf72a}</UniqueIdentifier>
+      <UniqueIdentifier>{5a8fbf71-2806-4aae-9d5e-0042381a8b5d}</UniqueIdentifier>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
   </ItemGroup>
@@ -87,8 +87,6 @@
     <None Include="BonCasService.rgs">
       <Filter>リソース ファイル</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
+    <None Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

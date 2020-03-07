@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{45b1a9c0-78fb-470e-982c-4b9e98a9d895}</UniqueIdentifier>
+      <UniqueIdentifier>{3046ca47-c56b-4eb0-8989-c67c42b684c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="生成されたファイル">
-      <UniqueIdentifier>{013f2af8-2e0b-4034-8a5a-382e1faa39c4}</UniqueIdentifier>
+      <UniqueIdentifier>{23b0db02-c06c-48e8-a1f8-561af8150f3f}</UniqueIdentifier>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
   </ItemGroup>

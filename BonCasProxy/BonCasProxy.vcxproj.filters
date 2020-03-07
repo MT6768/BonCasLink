@@ -52,27 +52,25 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\BlueCard.ico">
+    <None Include="res\BlueCard.ico">
       <Filter>リソース ファイル</Filter>
-    </Image>
-    <Image Include="res\BonCasProxy.ico">
+    </None>
+    <None Include="res\BonCasProxy.ico">
       <Filter>リソース ファイル</Filter>
-    </Image>
-    <Image Include="res\icon1.ico">
+    </None>
+    <None Include="res\BonCasProxy.rc2">
       <Filter>リソース ファイル</Filter>
-    </Image>
-    <Image Include="res\iRedCard.ico">
+    </None>
+    <None Include="res\icon1.ico">
       <Filter>リソース ファイル</Filter>
-    </Image>
+    </None>
+    <None Include="res\iRedCard.ico">
+      <Filter>リソース ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BonCasProxy.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\BonCasProxy.rc2">
-      <Filter>リソース ファイル</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -42,8 +42,8 @@ const BOOL CNotifyIcon::AddIcon(const HWND hHwnd, const HICON hIcon, LPCTSTR lps
 	if(!::Shell_NotifyIcon(NIM_SETVERSION, &IconData))return FALSE;
 	
 	// ホストウィンドウをサブクラス化する
-	if(!(m_OldHostWndProc = (WNDPROC)::SetWindowLong(hHwnd, GWL_WNDPROC, (LONG)CNotifyIcon::HostWndProcRaw)))return FALSE;
-	::SetWindowLong(hHwnd, GWL_USERDATA, (LONG)this);
+	if(!(m_OldHostWndProc = (WNDPROC)::SetWindowLongPtr(hHwnd, GWLP_WNDPROC, (LONG_PTR)CNotifyIcon::HostWndProcRaw)))return FALSE;
+	::SetWindowLongPtr(hHwnd, GWLP_USERDATA, (LONG_PTR)this);
 
 	return TRUE;
 }
@@ -53,7 +53,7 @@ const BOOL CNotifyIcon::RemoveIcon(void)
 	if(!m_hHostHwnd)return FALSE;
 
 	// サブクラス化解除	
-	::SetWindowLong(m_hHostHwnd, GWL_WNDPROC, (LONG)m_OldHostWndProc);
+	::SetWindowLongPtr(m_hHostHwnd, GWLP_WNDPROC, (LONG_PTR)m_OldHostWndProc);
 
 	// タスクトレイからアイコンを削除
 	NOTIFYICONDATA IconData;
@@ -145,7 +145,7 @@ const BOOL CNotifyIcon::HideBalloon(void)
 
 LRESULT CALLBACK CNotifyIcon::HostWndProcRaw(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	CNotifyIcon *pThis = reinterpret_cast<CNotifyIcon *>(::GetWindowLong(hwnd, GWL_USERDATA));
+	CNotifyIcon *pThis = reinterpret_cast<CNotifyIcon *>(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
 	// 扱いやすいようにインスタンス内のメンバを呼ぶ
 	if(pThis->HostWndProc(uMsg, wParam, lParam))return TRUE;
