@@ -4,8 +4,8 @@
 BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/up1085.zip ) に同梱されているソースコードの Mirror
 
 ビルド環境を Visual Studio 2019 (VS2019) に更新した事、パッチ ( [BonCasLink.diff.txt](http://www2.wazoku.net/2sen/dtvvup/source/BonCasLink.diff.txt) ) を当てた事、この README.md を作成した事、フォントを Meiryo UI に変更した事以外はオリジナルのままとなっている。  
-以下のドキュメントは [Readme.txt](README.txt)・[Readme_x64.txt](README_x64.txt) を現状に合わせて一部改変し、Markdown 形式に書き換えたものである。  
-オリジナルの [Readme.txt](README.txt)・[Readme_x64.txt](README_x64.txt) も参照されたい。
+以下のドキュメントは [Readme.txt](Readme.txt)・[Readme_x64.txt](Readme_x64.txt) を現状に合わせて一部改変し、Markdown 形式に書き換えたものである。  
+オリジナルの [Readme.txt](Readme.txt)・[Readme_x64.txt](Readme_x64.txt) も参照されたい。
 
 ----
 
