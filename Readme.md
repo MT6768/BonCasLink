@@ -1,9 +1,9 @@
 
 # BonCasLink
 
-BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/up1085.zip ) に同梱されているソースコードの Mirror
+BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/up1085.zip) に同梱されているソースコードのミラー。
 
-ビルド環境を Visual Studio 2019 (VS2019) に更新した事、パッチ ( [BonCasLink.diff.txt](http://www2.wazoku.net/2sen/dtvvup/source/BonCasLink.diff.txt) ) を当てた事、この README.md を作成した事、フォントを Meiryo UI に変更した事以外はオリジナルのままとなっている。  
+ダイヤログのフォントを Meiryo UI に変更したこと、ビルド環境を Visual Studio 2019 (VS2019) に更新したこと、パッチ ([BonCasLink.diff.txt](http://www2.wazoku.net/2sen/dtvvup/source/BonCasLink.diff.txt)) を当てたこと、この Readme.md を作成したこと以外はオリジナルのままとなっている。  
 以下のドキュメントは [Readme.txt](Readme.txt)・[Readme_x64.txt](Readme_x64.txt) を現状に合わせて一部改変し、Markdown 形式に書き換えたものである。  
 オリジナルの [Readme.txt](Readme.txt)・[Readme_x64.txt](Readme_x64.txt) も参照されたい。
 
@@ -19,7 +19,7 @@ BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/
 
 64bit 版の BonCasLink を利用する場合は x64 フォルダ内の exe を使用してください。
 
-[BonCasLink v1.10-patch](https://github.com/miraao/BonCasLink/releases/download/v1.10-patch/BonCasLink_v1.10-patch.zip)
+[BonCasLink v1.10-patch](https://github.com/mizunoko/BonCasLink/releases/download/v1.10-patch/BonCasLink_v1.10-patch.zip)
 
 ## 64bit 対応版について
 
