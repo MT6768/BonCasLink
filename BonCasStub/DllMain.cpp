@@ -22,7 +22,7 @@ typedef HMODULE (WINAPI *PFNLOADLIBRARYA)(LPCSTR lpLibFileName);
 
 
 // プロセス間共有グローバル変数
-#pragma data_seg (".HookSection")		
+#pragma data_seg (".HookSection")
 HHOOK hHook = NULL;
 HWND hHostHwnd = NULL;
 #pragma data_seg ()
@@ -32,7 +32,9 @@ HWND hHostHwnd = NULL;
 static HINSTANCE hInstance = NULL;
 static PFNLOADLIBRARYW pfnLoadLibraryWOrg = NULL;
 static PFNLOADLIBRARYA pfnLoadLibraryAOrg = NULL;
-	
+static const LPSTR szReaderNameA = "BonCasLink Proxy Card Reader\0\0";
+static const LPWSTR szReaderNameW = L"BonCasLink Proxy Card Reader\0\0";
+
 
 // プロトタイプ
 static const BOOL IsHookTargetApp(void);
@@ -54,10 +56,10 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 
 #ifdef _DEBUG
 		// メモリリーク検出有効
-			::_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | ::_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG)); 
+			::_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | ::_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG));
 #endif
 			hInstance = hModule;
-			
+
 			if(::IsHookTargetApp()){
 				// WinScard.dll APIフック
 				if(::InstallScardHook()){
@@ -94,17 +96,20 @@ static LONG WINAPI SCardConnectAHook(SCARDCONTEXT hContext, LPCSTR szReader, DWO
 {
 	// プロキシインスタンス生成
 	CCasProxy *pCasProxy = new CCasProxy(hHostHwnd);
-	
+
 	// サーバに接続
-	if(!pCasProxy->Connect()){
+	if (!pCasProxy->Connect())
+	{
 		delete pCasProxy;
 		*phCard = NULL;
 		return SCARD_E_READER_UNAVAILABLE;
-		}
+	}
 
 	// ハンドルに埋め込む
 	*phCard = reinterpret_cast<SCARDHANDLE>(pCasProxy);
-	if(pdwActiveProtocol)*pdwActiveProtocol = SCARD_PROTOCOL_T1;
+
+	if (pdwActiveProtocol)
+		*pdwActiveProtocol = SCARD_PROTOCOL_T1;
 
 	return SCARD_S_SUCCESS;
 }
@@ -115,15 +120,18 @@ static LONG WINAPI SCardConnectWHook(SCARDCONTEXT hContext, LPCWSTR szReader, DW
 	CCasProxy *pCasProxy = new CCasProxy(hHostHwnd);
 
 	// サーバに接続
-	if(!pCasProxy->Connect()){
+	if (!pCasProxy->Connect())
+	{
 		delete pCasProxy;
 		*phCard = NULL;
 		return SCARD_E_READER_UNAVAILABLE;
-		}
+	}
 
 	// ハンドルに埋め込む
 	*phCard = reinterpret_cast<SCARDHANDLE>(pCasProxy);
-	if(pdwActiveProtocol)*pdwActiveProtocol = SCARD_PROTOCOL_T1;
+
+	if (pdwActiveProtocol)
+		*pdwActiveProtocol = SCARD_PROTOCOL_T1;
 
 	return SCARD_S_SUCCESS;
 }
@@ -132,7 +140,8 @@ static LONG WINAPI SCardDisconnectHook(SCARDHANDLE hCard, DWORD dwDisposition)
 {
 	// サーバから切断
 	CCasProxy *pCasProxy = reinterpret_cast<CCasProxy *>(hCard);
-	if(pCasProxy)delete pCasProxy;
+	if (pCasProxy)
+		delete pCasProxy;
 
 	return SCARD_S_SUCCESS;
 }
@@ -147,13 +156,38 @@ static LONG WINAPI SCardFreeMemoryHook(SCARDCONTEXT hContext, LPCVOID pvMem)
 	return SCARD_S_SUCCESS;
 }
 
+static LONG WINAPI SCardGetStatusChangeAHook(SCARDCONTEXT hContext, DWORD dwTimeout, LPSCARD_READERSTATE_A rgReaderStates, DWORD cReaders)
+{
+	// 手抜き
+	if ((lstrcmpA(rgReaderStates->szReader, szReaderNameA) != 0))
+		rgReaderStates->dwEventState = SCARD_STATE_IGNORE | SCARD_STATE_CHANGED | SCARD_STATE_UNKNOWN;
+	else
+		rgReaderStates->dwEventState = SCARD_STATE_PRESENT;
+	return SCARD_S_SUCCESS;
+}
+
+static LONG WINAPI SCardGetStatusChangeWHook(SCARDCONTEXT hContext, DWORD dwTimeout, LPSCARD_READERSTATE_W rgReaderStates, DWORD cReaders)
+{
+	// 手抜き
+	if ((lstrcmpW(rgReaderStates->szReader, szReaderNameW) != 0))
+		rgReaderStates->dwEventState = SCARD_STATE_IGNORE | SCARD_STATE_CHANGED | SCARD_STATE_UNKNOWN;
+	else
+		rgReaderStates->dwEventState = SCARD_STATE_PRESENT;
+	return SCARD_S_SUCCESS;
+}
+
+static LONG WINAPI SCardIsValidContextHook(SCARDCONTEXT hContext)
+{
+	return SCARD_S_SUCCESS;
+}
+
 static LONG WINAPI SCardListReadersAHook(SCARDCONTEXT hContext, LPCSTR mszGroups, LPSTR mszReaders, LPDWORD pcchReaders)
 {
 	static const char szReaderName[] = "BonCasLink Proxy Card Reader\0";
 
 	if(pcchReaders){
 		if((*pcchReaders == SCARD_AUTOALLOCATE) && mszReaders){
-			*((LPCSTR *)mszReaders) = szReaderName;		
+			*((LPCSTR *)mszReaders) = szReaderName;
 			return SCARD_S_SUCCESS;
 			}
 		else{
@@ -172,7 +206,7 @@ static LONG WINAPI SCardListReadersWHook(SCARDCONTEXT hContext, LPCWSTR mszGroup
 
 	if(pcchReaders){
 		if((*pcchReaders == SCARD_AUTOALLOCATE) && mszReaders){
-			*((LPCWSTR *)mszReaders) = szReaderName;		
+			*((LPCWSTR *)mszReaders) = szReaderName;
 			return SCARD_S_SUCCESS;
 			}
 		else{
@@ -185,21 +219,125 @@ static LONG WINAPI SCardListReadersWHook(SCARDCONTEXT hContext, LPCWSTR mszGroup
 	return SCARD_S_SUCCESS;
 }
 
+static LONG WINAPI SCardReleaseContextHook(SCARDCONTEXT hContext)
+{
+	return SCARD_S_SUCCESS;
+}
+
+static LONG WINAPI SCardStatusAHook(SCARDHANDLE hCard, LPSTR szReaderName, LPDWORD pcchReaderLen, LPDWORD pdwState, LPDWORD pdwProtocol, LPBYTE pbAtr, LPDWORD pcbAtrLen)
+{
+	CCasProxy *pCasProxy = reinterpret_cast<CCasProxy *>(hCard);
+	if (!pCasProxy)
+		return SCARD_E_INVALID_HANDLE;
+
+	LPSTR pReaderName;
+	pReaderName = szReaderNameA;
+
+	if (szReaderName)
+	{
+		if (*pcchReaderLen == SCARD_AUTOALLOCATE)
+		{
+			*((void **)szReaderName) = pReaderName;
+			*pcchReaderLen = lstrlenA(pReaderName) + 2;
+		}
+		else
+		{
+			int len = lstrlenA(pReaderName) + 2;
+			if (*pcchReaderLen >= (DWORD)len)
+			{
+				memcpy(szReaderName, pReaderName, len);
+				*pcchReaderLen = len;
+			}
+			else
+			{
+				DWORD dw = *pcchReaderLen;
+				LPSTR p = pReaderName;
+				while (dw)
+				{
+					*szReaderName++ = *p++;
+					dw--;
+				}
+			}
+		}
+	}
+	else
+		*pcchReaderLen = lstrlenA(pReaderName) + 2;
+	if (pdwState)
+		*pdwState = SCARD_PRESENT;
+	if (pdwProtocol)
+		*pdwProtocol = SCARD_PROTOCOL_T1;
+	if (pcbAtrLen)
+	{
+		if (*pcbAtrLen == SCARD_AUTOALLOCATE)
+			*((LPBYTE *)pbAtr) = (LPBYTE)"";
+		*pcbAtrLen = 0;
+	}
+	return SCARD_S_SUCCESS;
+}
+
+static LONG WINAPI SCardStatusWHook(SCARDHANDLE hCard, LPWSTR szReaderName, LPDWORD pcchReaderLen, LPDWORD pdwState, LPDWORD pdwProtocol, LPBYTE pbAtr, LPDWORD pcbAtrLen)
+{
+	CCasProxy *pCasProxy = reinterpret_cast<CCasProxy *>(hCard);
+	if (!pCasProxy)
+		return SCARD_E_INVALID_HANDLE;
+
+	LPWSTR pReaderName;
+	pReaderName = szReaderNameW;
+
+	if (szReaderName)
+	{
+		if (*pcchReaderLen == SCARD_AUTOALLOCATE)
+		{
+			*((void **)szReaderName) = pReaderName;
+			*pcchReaderLen = lstrlenW(pReaderName) + 2;
+		}
+		else
+		{
+			int len = lstrlenW(pReaderName) + 2;
+			if (*pcchReaderLen >= (DWORD)len)
+			{
+				memcpy(szReaderName, pReaderName, len * sizeof(WCHAR));
+				*pcchReaderLen = len;
+			}
+			else
+			{
+				DWORD dw = *pcchReaderLen;
+				LPWSTR p = pReaderName;
+				while (dw)
+				{
+					*szReaderName++ = *p++;
+					dw--;
+				}
+			}
+		}
+	}
+	else
+		*pcchReaderLen = lstrlenW(pReaderName) + 2;
+	if (pdwState)
+		*pdwState = SCARD_PRESENT;
+	if (pdwProtocol)
+		*pdwProtocol = SCARD_PROTOCOL_T1;
+	if (pcbAtrLen)
+	{
+		if (*pcbAtrLen == SCARD_AUTOALLOCATE)
+			*((LPBYTE *)pbAtr) = (LPBYTE)"";
+		*pcbAtrLen = 0;
+	}
+	return SCARD_S_SUCCESS;
+}
+
 static LONG WINAPI SCardTransmitHook(SCARDHANDLE hCard, LPCSCARD_IO_REQUEST pioSendPci, LPCBYTE pbSendBuffer, DWORD cbSendLength, LPSCARD_IO_REQUEST pioRecvPci, LPBYTE pbRecvBuffer, LPDWORD pcbRecvLength)
 {
 	// サーバにリクエスト送受信
 	CCasProxy *pCasProxy = reinterpret_cast<CCasProxy *>(hCard);
-	if(!pCasProxy)return SCARD_E_READER_UNAVAILABLE;
+	if (!pCasProxy)
+		return SCARD_E_INVALID_HANDLE;
 
 	const DWORD dwRecvLen = pCasProxy->TransmitCommand(pbSendBuffer, cbSendLength, pbRecvBuffer);
-	if(pcbRecvLength)*pcbRecvLength = dwRecvLen;
+	if (pcbRecvLength)
+		*pcbRecvLength = dwRecvLen;
 
-	return (dwRecvLen)? SCARD_S_SUCCESS : SCARD_E_TIMEOUT;
-}
-
-static LONG WINAPI SCardReleaseContextHook(SCARDCONTEXT hContext)
-{
-	return SCARD_S_SUCCESS;
+	return (dwRecvLen) ? SCARD_S_SUCCESS : SCARD_E_TIMEOUT;
 }
 
 static const BOOL IsHookTargetApp(void)
@@ -215,7 +353,7 @@ static const BOOL IsHookTargetApp(void)
 	   ::StrStrI(szModulePath, TEXT("system32"			))){
 		return FALSE;
 		}
-	
+
 	return TRUE;
 }
 
@@ -233,7 +371,7 @@ static const BOOL InstallKernelHook(void)
 	// IATを上書き
 	::ReplaceApiProc("Kernel32.dll", (PROC)pfnLoadLibraryWOrg, (PROC)::LoadLibraryWHook);
 	::ReplaceApiProc("Kernel32.dll", (PROC)pfnLoadLibraryAOrg, (PROC)::LoadLibraryAHook);
-	
+
 	return TRUE;
 }
 
@@ -259,10 +397,15 @@ static const BOOL InstallScardHook(void)
 	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardDisconnect"		  ), (PROC)::SCardDisconnectHook		);
 	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardEstablishContext" ), (PROC)::SCardEstablishContextHook	);
 	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardFreeMemory"		  ), (PROC)::SCardFreeMemoryHook		);
+	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardGetStatusChangeA" ), (PROC)::SCardGetStatusChangeAHook	);
+	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardGetStatusChangeW" ), (PROC)::SCardGetStatusChangeWHook	);
+	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardIsValidContext"	  ), (PROC)::SCardIsValidContextHook	);
 	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardListReadersA"	  ), (PROC)::SCardListReadersAHook		);
 	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardListReadersW"	  ), (PROC)::SCardListReadersWHook		);
-	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardTransmit"		  ), (PROC)::SCardTransmitHook			);
 	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardReleaseContext"	  ), (PROC)::SCardReleaseContextHook	);
+	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardStatusA"		  ), (PROC)::SCardStatusAHook			);
+	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardStatusW"		  ), (PROC)::SCardStatusWHook			);
+	::ReplaceApiProc("WinScard.dll", ::GetProcAddress(hCurModule, "SCardTransmit"		  ), (PROC)::SCardTransmitHook			);
 
 	return TRUE;
 }
