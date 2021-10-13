@@ -3,9 +3,24 @@
 
 BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/up1085.zip) に同梱されているソースコードのミラー。
 
-ダイヤログのフォントを Meiryo UI に変更したこと、ビルド環境を Visual Studio 2019 (VS2019) に更新したこと、パッチ ([BonCasLink.diff.txt](http://www2.wazoku.net/2sen/dtvvup/source/BonCasLink.diff.txt)) を当てたこと、この Readme.md を作成したこと以外はオリジナルのままとなっている。  
+[hoge_20141102](https://drive.google.com/file/d/0B-b35lIwjw6yYlAwU0pUMHdNUTg) から関数を移植し WinSCard API との互換性を改善したこと、ダイヤログのフォントを Meiryo UI に変更したこと、ビルド環境を Visual Studio 2019 (VS2019) に更新したこと、パッチ ([BonCasLink.diff.txt](http://www2.wazoku.net/2sen/dtvvup/source/BonCasLink.diff.txt)) を当てたこと、この Readme.md を作成したこと以外はオリジナルのままとなっている。  
 以下のドキュメントは [Readme.txt](Readme.txt)・[Readme_x64.txt](Readme_x64.txt) を現状に合わせて一部改変し、Markdown 形式に書き換えたものである。  
 オリジナルの [Readme.txt](Readme.txt)・[Readme_x64.txt](Readme_x64.txt) も参照されたい。
+
+### 利用時の注意
+
+**BonCasProxy は現状 TVTest 0.9.0・TVTest 0.10.0 に対応していない。**  
+そのため、BonCasProxy を起動した状態で 0.9.0 以降の TVTest を起動すると、すぐ異常終了したり、BonCasProxy の仮想スマートカードが認識されずスクランブル解除ができない事がある。  
+
+> BonCasProxy は、起動している間 OS 全体の WinSCard API を横取りし、BonCasStub.dll 上にある BonCasLink のクライアントを実装した仮想スマートカードで API を強引に置き換えるような実装となっている。  
+> その影響で、スクランブル周りの実装が刷新された TVTest 0.9.0 以降ではカードリーダーの管理の整合性が崩れ、エラーになるのではないかと推測する。
+
+BonCasLink (BonCasServer, BonCasService) のクライアントには BonCasProxy ではなく、BonCasClient か BonCasSCard を利用する事を推奨する。  
+BonCasClient や BonCasSCard であれば、TVTest が 0.9.0 以降であるかに関わらず、安定してスクランブルを解除できる。
+
+また、BonCasProxy のビット数 (32bit or 64bit) は、TVTest などの BonCasProxy を利用するソフトに合わせる必要がある。  
+ただし、BonCasProxy と BonCasLink (BonCasServer, BonCasService) が異なるビット数になっている事は問題ない。  
+BonCasProxy と BonCasLink が TCP で通信しているためで、たとえば TVTest と BonCasProxy が 64bit 、BonCasLink が 32bit の場合でも正常に読み込める。
 
 ----
 
@@ -13,11 +28,9 @@ BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/
 
 ## 概要
 
-スマートカードリーダを LAN を経由で共有するためのシステムです。
+スマートカードリーダを LAN 経由で共有するためのシステムです。
 
 ## ダウンロード
-
-64bit 版の BonCasLink を利用する場合は x64 フォルダ内の exe を使用してください。
 
 [BonCasLink v1.10-patch](https://github.com/mizunoko/BonCasLink/releases/download/v1.10-patch/BonCasLink_v1.10-patch.zip)
 
