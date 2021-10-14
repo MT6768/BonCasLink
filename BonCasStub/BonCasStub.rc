@@ -72,11 +72,11 @@ BEGIN
             VALUE "Comments", "BonCasStub"
             VALUE "CompanyName", "http://2sen.dip.jp/friio/"
             VALUE "FileDescription", "Smart Card Sharing Stub"
-            VALUE "FileVersion", "1, 1, 0, 0"
+            VALUE "FileVersion", "1.1.0.0"
             VALUE "InternalName", "BonCasStub"
             VALUE "LegalCopyright", "http://2sen.dip.jp/friio/"
             VALUE "OriginalFilename", "BonCasStub.dll"
-            VALUE "ProductVersion", "1, 1, 0, 0"
+            VALUE "ProductVersion", "1.1.0.0"
         END
     END
     BLOCK "VarFileInfo"

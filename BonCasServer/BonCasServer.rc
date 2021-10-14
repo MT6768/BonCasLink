@@ -106,8 +106,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,1,0
- PRODUCTVERSION 1,0,1,0
+ FILEVERSION 1,1,0,0
+ PRODUCTVERSION 1,1,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -125,10 +125,10 @@ BEGIN
             VALUE "Comments", "BonCasServer"
             VALUE "CompanyName", "http://2sen.dip.jp/friio/"
             VALUE "FileDescription", "Smart Card Sharing Server"
-            VALUE "FileVersion", "1.0.0.0"
+            VALUE "FileVersion", "1.1.0.0"
             VALUE "InternalName", "BonCasServer.exe"
             VALUE "LegalCopyright", "http://2sen.dip.jp/friio/"
-            VALUE "ProductVersion", "1.0.1.0"
+            VALUE "ProductVersion", "1.1.0.0"
         END
     END
     BLOCK "VarFileInfo"
