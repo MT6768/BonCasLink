@@ -13,12 +13,7 @@
 #endif
 
 
-#ifdef _DEBUG
-	#pragma comment(lib, "..\\Debug\\BonCasStub.lib")
-#else
-	#pragma comment(lib, "..\\Release\\BonCasStub.lib")
-#endif
-
+#pragma comment(lib, "BonCasStub.lib")
 #pragma comment(lib, "psapi.lib")
 
 
