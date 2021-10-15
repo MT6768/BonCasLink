@@ -131,6 +131,9 @@ public :
 			m_CasServer.OpenServer(m_wServerPort);
 		}
 
+		// サービスのステータスを明示的に RUNNING（実行中）に設定
+		SetServiceStatus(SERVICE_RUNNING);
+
 		return hr;
 	}
 
