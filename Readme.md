@@ -10,12 +10,12 @@ BonCasLink v1.10 ( 64bit 対応版・http://www2.wazoku.net/2sen/friioup/source/
 ### 利用時の注意
 
 **BonCasProxy は現状 TVTest 0.9.0・TVTest 0.10.0 に対応していない。**  
-そのため、BonCasProxy を起動した状態で 0.9.0 以降の TVTest を起動すると、すぐ異常終了したり、BonCasProxy の仮想スマートカードが認識されずスクランブル解除ができない事がある。  
+そのため、BonCasProxy を起動した状態で 0.9.0 以降の TVTest を起動すると、すぐ異常終了したり、BonCasProxy の仮想スマートカードが認識されず、スクランブル解除ができない事がある。  
 
-> BonCasProxy は、起動している間 OS 全体の WinSCard API を横取りし、BonCasStub.dll 上にある BonCasLink のクライアントを実装した仮想スマートカードで API を強引に置き換えるような実装となっている。  
-> その影響で、スクランブル周りの実装が刷新された TVTest 0.9.0 以降ではカードリーダーの管理の整合性が崩れ、エラーになるのではないかと推測する。
+> BonCasProxy は、起動している間 OS 全体の WinSCard API を横取りし、BonCasStub.dll 上にある BonCasLink のクライアントを実装した仮想スマートカードで強引に API を置き換えるような実装となっている。  
+> その影響で、スクランブル周りの実装が刷新された TVTest 0.9.0 以降ではカードリーダーの管理の整合性が崩れ、エラーになるのではないかと推測している。
 
-BonCasLink (BonCasServer, BonCasService) のクライアントには BonCasProxy ではなく、BonCasClient か BonCasSCard を利用する事を推奨する。  
+BonCasLink (BonCasServer, BonCasService) のクライアントには BonCasProxy ではなく、[BonCasClient](https://github.com/mizunoko/BonCasClient) か [BonCasSCard](https://github.com/mizunoko/BonCasScard) を利用する事を推奨する。  
 BonCasClient や BonCasSCard であれば、TVTest が 0.9.0 以降であるかに関わらず、安定してスクランブルを解除できる。
 
 また、BonCasProxy のビット数 (32bit or 64bit) は、TVTest などの BonCasProxy を利用するソフトに合わせる必要がある。  
@@ -36,20 +36,16 @@ BonCasProxy と BonCasLink が TCP で通信しているためで、たとえば
 
 ## 64bit 対応版について
 
-VS2019 を使って x64 でビルドしたモジュールです。
-
 ビルド時にエラーとなった部分を一部修正しています。  
 （ GWL_USERDATA -> GWLP_USERDATA、GetWindowLong -> GetWindowLongPtr など）  
 他の改変は行っていません。  
 
-動作には VC++2019 のランタイムが必要です。
+## 動作確認環境
 
-問題があったり、公式が更新されるようなら削除します。
-
-### 動作確認環境
-- Server … WindowsXP SP3 x86
-- Proxy … Windows7 x64
-- EpgDataCap_Bon … 人柱版10.3
+- BonCasProxy … Windows7 x64, Windows10 x64
+- BonCasServer … Windows7 x64, Windows10 x64
+- BonCasService … Windows7 x64, Windows10 x64
+- EpgDataCap_Bon … 10.70 (xtne6f版)
 
 ## 注意事項
 
@@ -71,9 +67,9 @@ VS2019 を使って x64 でビルドしたモジュールです。
 - ソフトウェアの名称を「BonCasLink」以外に変更すること。
 - 「拡張ツール中の人」の著作権表示を一切行わないこと。
 - ソースコードの流用元の表示を一切行わないこと。
-- ビルドに必要な環境
+- ビルドに必要な環境:
   - Microsoft Visual Studio 2019 以上　※ MFC が必要
-  - Microsoft Windows SDK v6.0 以上
+  - Microsoft Windows SDK v10.0.19041.0 以上
 
 ## 使用方法
 
@@ -81,18 +77,18 @@ VS2019 を使って x64 でビルドしたモジュールです。
 2. LAN に参加している他の PC で「BonCasProxy」を起動します。
 3. タスクトレイのアイコンをクリックし、メニューから「クライアントの設定」をクリックします。
 4. IP アドレスに「BonCasServer」を動作させている PC の IP アドレスを入力して OK をクリックします。
-5. 「BonCasProxy」を動作させているPCでスマートカードを使用するアプリケーションを起動します。
-   - 正常に接続が行われカードリーダの共有が行われればタスクトレイのアイコンが赤色に変化します。
-   - ※ファイヤウォールやフィルタリングを使用している場合は共有に使用するポートを開放してください。
+5. 「BonCasProxy」を動作させている PC でスマートカードを使用するアプリケーションを起動します。
+   - 正常に接続が行われカードリーダの共有が行われれば、タスクトレイのアイコンが赤色に変化します。
+   - ファイヤウォールやフィルタリングを使用している場合は、共有に使用するポートを開放してください。
 
 ## サービス版について
 
-「BonCasService.exe」を使用することでサーバを Windows サービスとして動作させることができます。
+「BonCasService.exe」を使用することで、サーバを Windows サービスとして動作させることができます。
 
 1. 「サービスインストール.bat」を実行してサービスに登録します。
 2. 「サービス開始.bat」を実行するとサービスを開始することができます。
-   - ※ PC 起動時にサービスを自動的に開始するにはサービスの管理でスタートアップの種類を「自動」に設定してください。
-   - ※ポートの設定は BonCasService.ini を直接編集して設定してください。
+   - PC 起動時にサービスを自動的に開始するには、サービスの管理コンソールでスタートアップの種類を「自動」に設定してください。
+   - ポートの設定は BonCasService.ini を直接編集して設定してください。
 
 ## サポート、連絡先
 
@@ -108,9 +104,9 @@ VS2019 を使って x64 でビルドしたモジュールです。
 
 - **Ver.1.10**
   - 動的にスマートカードサービスを使用するアプリケーションにも対応した。
-  - BonCasStub.dll の更新のみ
+  - BonCasStub.dll の更新のみ。
 - **Ver.1.01**
   - サービス版を追加
-  - BonCasServerの設定を即時反映するようにした。
+  - BonCasServer の設定を即時反映するようにした。
 - **Ver.1.00**
   - 初回リリース
